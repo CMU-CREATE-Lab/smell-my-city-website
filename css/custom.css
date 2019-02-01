@@ -14,6 +14,6 @@
 
 @media screen and (min-width: 900px) {
   .flex-item-stretch-demo-video {
-    flex: 2;
+    flex: 2.1;
   }
 }
