@@ -2,14 +2,31 @@
  * Your custom CSS file
  *************************************************************************/
 
+#download-button-container {
+  display: none;
+}
+
 #download-button {
   padding: 10px 20px;
-  margin: 10px 0;
+  margin: 5px 0 15px 0;
   font-size: 16px;
+  width: 225px;
+}
+
+#region-dropdown {
+  width: 150px;
+}
+
+#timezone-dropdown {
+  width: 320px;
 }
 
 #demo-video {
   max-width: 400px;
+}
+
+#zipcode-input {
+  display: none;
 }
 
 @media screen and (min-width: 900px) {
