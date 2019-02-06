@@ -32,40 +32,34 @@
           <div class="flex-item flex-column">
             <h2>Download Smell Report Data</h2>
             <hr>
-            <p class="text-small-margin">
+            <p class="text-small-margin add-bottom-margin">
               We take every precaution to protect any personally identifiable data.
               All information shown on the public map visualization for Smell MyCity is anonymized and location data is skewed to protect your privacy.
               Personal contact information you enter in the settings tab is only made available to the relevant local regulatory agency.
               Our backend database only contains anonymous User ID's created by your app service (Apple or Google Play).
             </p>
-            <ul>
-              <li>
-                <span>Select a city or zipcode:</span>
-                <div class="custom-dropdown large add-top-margin-small add-bottom-margin" id="region-dropdown">
-                  <a tabindex="0" href="javascript:void(0)"><span></span></a>
-                  <div></div>
-                </div>
-              </li>
-              <li id="zipcode-input">
-                <span>Enter zipcodes, seperated by comma:</span>
-                <div class="add-top-margin-small add-bottom-margin">
-                  <input class="custom-textbox" type="text" value="15213,15217" style="width: 225px;">
-                </div>
-              </li>
-              <li>
-                <span>Select a timezone:</span>
-                <div class="custom-dropdown large add-top-margin-small add-bottom-margin" id="timezone-dropdown">
-                  <a tabindex="0" href="javascript:void(0)"><span></span></a>
-                  <div></div>
-                </div>
-              </li>
-              <li id="download-button-container">
-                <span>Dowload data in csv format:</span>
-                <div class="control-group">
-                  <a class="custom-button custom-button-primary" id="download-button">Download Smell Report</a>
-                </div>
-              </li>
-            </ul>
+            <span>Select a city or zipcode:</span>
+            <div class="custom-dropdown large add-top-margin-small add-bottom-margin" id="region-dropdown">
+              <a tabindex="0" href="javascript:void(0)"><span></span></a>
+              <div></div>
+            </div>
+            <div id="zipcode-input-container">
+              <span>Enter zipcodes, seperated by comma:</span>
+              <div class="add-top-margin-small add-bottom-margin">
+                <input id="zipcode-input" class="custom-textbox" type="text" value="15213,15217">
+              </div>
+            </div>
+            <span>Select a timezone:</span>
+            <div class="custom-dropdown large add-top-margin-small add-bottom-margin" id="timezone-dropdown">
+              <a tabindex="0" href="javascript:void(0)"><span></span></a>
+              <div></div>
+            </div>
+            <div id="download-button-container">
+              <span>Dowload data in csv format:</span>
+              <div class="control-group">
+                <a class="custom-button custom-button-primary" id="download-button">Download Smell Report</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -89,6 +83,16 @@
   ga('send', 'pageview');
 
   // Timezone
+  var timezone_offset_array_selected = [
+    -5, -6, -7, -8, 0
+  ];
+  var timezone_txt_array_selected = [
+    "(GMT-05:00) Eastern Time",
+    "(GMT-06:00) Central Time",
+    "(GMT-07:00) Mountain Time",
+    "(GMT-08:00) Pacific Time",
+    "(GMT+00:00) UTC Time"
+  ];
   var timezone_offset_array = [
     -12, -11, -10, -9, -8, -8, -7, -7, -7, -6, -6, -6, -6,
     -5, -5, -5, -4, -4, -4, -4, -3.5, -3, -3, -3, -3, -2, -1, -1, 0, 0,
@@ -183,6 +187,7 @@
 
   function init() {
     var widgets = new edaplotjs.Widgets();
+    var $zipcode_input_container = $("#zipcode-input-container");
     var $zipcode_input = $("#zipcode-input");
     var $download_button = $("#download-button");
     var cached_url_settings = {};
@@ -207,20 +212,20 @@
 
       // Set UI
       var init_city_index = 0;
-      var init_timezone_index = 14;
+      var init_timezone_index = 0;
       widgets.setCustomDropdown($("#region-dropdown"), {
         items: city_names,
         init_index: init_city_index,
         on_item_click_callback: function ($ui) {
+          delete cached_url_settings["city_id"];
+          delete cached_url_settings["zipcodes"];
           if ($ui.data("id") == -1) {
-            delete cached_url_settings["city_id"];
-            $zipcode_input.show();
-            cached_url_settings["zipcodes"] = $zipcode_input.find("input").val().replace(/\s/g, "");
+            $zipcode_input_container.show();
+            cached_url_settings["zipcodes"] = $zipcode_input.val().replace(/\s/g, "");
           } else {
-            delete cached_url_settings["zipcodes"];
-            $zipcode_input.hide();
+            $zipcode_input_container.hide();
             var cid = $ui.data("id");
-            if (typeof cid !== "undefined" && cid != null) {
+            if (typeof cid !== "undefined" && cid !== null) {
               cached_url_settings["city_id"] = cid;
             }
           }
@@ -232,25 +237,25 @@
       });
       $zipcode_input.on("change", function () {
         delete cached_url_settings["city_id"];
-        cached_url_settings["zipcodes"] = $zipcode_input.find("input").val().replace(/\s/g, "");
+        cached_url_settings["zipcodes"] = $zipcode_input.val().replace(/\s/g, "");
         updateDownloadUrl();
       });
       widgets.setCustomDropdown($("#timezone-dropdown"), {
-        items: timezone_txt_array,
+        items: timezone_txt_array_selected,
         init_index: init_timezone_index,
         on_item_click_callback: function ($ui) {
           cached_url_settings["timezone_offset"] = $ui.data("offset");
           updateDownloadUrl();
         },
         on_item_create_callback: function ($ui, i) {
-          $ui.data("offset", timezone_offset_array[i]);
+          $ui.data("offset", timezone_offset_array_selected[i]);
         }
       });
 
       // Initialize and show the download button
       cached_url_settings = {
         "city_id": city_ids[init_city_index],
-        "timezone_offset": timezone_offset_array[init_timezone_index]
+        "timezone_offset": timezone_offset_array_selected[init_timezone_index]
       };
       updateDownloadUrl();
       $("#download-button-container").show();
@@ -270,13 +275,14 @@
     var city_id = settings["city_id"];
     var timezone_offset = settings["timezone_offset"];
     var zipcodes = settings["zipcodes"];
-    if (typeof city_id !== "undefined" && city_id != "") {
+    if (typeof city_id !== "undefined" && city_id !== "") {
       url += "&city_ids=" + city_id;
     }
-    if (typeof timezone_offset !== "undefined" && timezone_offset != "") {
-      url += "&timezone_offset=" + -(parseInt(timezone_offset) * 60);
+    if (typeof timezone_offset !== "undefined" && timezone_offset !== "") {
+      console.log(timezone_offset);
+      url += "&timezone_offset=" + (-parseInt(timezone_offset) * 60);
     }
-    if (typeof zipcodes !== "undefined" && zipcodes != "") {
+    if (typeof zipcodes !== "undefined" && zipcodes !== "") {
       url += "&zipcodes=" + zipcodes;
     }
     return url;
