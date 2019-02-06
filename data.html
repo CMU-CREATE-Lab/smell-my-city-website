@@ -4,6 +4,7 @@
 <head>
   <title>Smell MyCity</title>
   <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <link href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
   <link href="css/widgets.css" media="screen" rel="stylesheet" type="text/css" />
@@ -12,6 +13,7 @@
   <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/widgets.js"></script>
   <style>
@@ -54,6 +56,12 @@
               <a tabindex="0" href="javascript:void(0)"><span></span></a>
               <div></div>
             </div>
+            <span>Select a time range:</span>
+            <div class="add-top-margin-small add-bottom-margin">
+              <input type="text" id="from-time-input" name="from" class="custom-textbox">
+              <label for="to-time-input" id="to-time-txt">to</label>
+              <input type="text" id="to-time-input" name="to" class="custom-textbox">
+            </div>
             <div id="download-button-container">
               <span>Dowload data in csv format:</span>
               <div class="control-group">
@@ -84,105 +92,18 @@
 
   // Timezone
   var timezone_offset_array_selected = [
-    -5, -6, -7, -8, 0
+    0, -5, -4, -6, -5, -7, -6, -8, -7
   ];
   var timezone_txt_array_selected = [
+    "(GMT+00:00) UTC Time",
     "(GMT-05:00) Eastern Time",
+    "(GMT-04:00) Eastern Daylight Time",
     "(GMT-06:00) Central Time",
+    "(GMT-05:00) Central Daylight Time",
     "(GMT-07:00) Mountain Time",
+    "(GMT-06:00) Mountain Daylight Time",
     "(GMT-08:00) Pacific Time",
-    "(GMT+00:00) UTC Time"
-  ];
-  var timezone_offset_array = [
-    -12, -11, -10, -9, -8, -8, -7, -7, -7, -6, -6, -6, -6,
-    -5, -5, -5, -4, -4, -4, -4, -3.5, -3, -3, -3, -3, -2, -1, -1, 0, 0,
-    1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3.5,
-    4, 4, 4, 4.5, 5, 5, 5.5, 5.5, 5.75, 6, 6, 6.5, 7, 7, 8, 8, 8, 8, 8,
-    9, 9, 9, 9.5, 9.5, 10, 10, 10, 10, 10, 11, 12, 12, 13
-  ];
-  var timezone_txt_array = [
-    "(GMT-12:00) International Date Line West",
-    "(GMT-11:00) Midway Island, Samoa",
-    "(GMT-10:00) Hawaii",
-    "(GMT-09:00) Alaska",
-    "(GMT-08:00) Pacific Time (US & Canada)",
-    "(GMT-08:00) Tijuana, Baja California",
-    "(GMT-07:00) Arizona",
-    "(GMT-07:00) Chihuahua, La Paz, Mazatlan",
-    "(GMT-07:00) Mountain Time (US & Canada)",
-    "(GMT-06:00) Central America",
-    "(GMT-06:00) Central Time (US & Canada)",
-    "(GMT-06:00) Guadalajara, Mexico City, Monterrey",
-    "(GMT-06:00) Saskatchewan",
-    "(GMT-05:00) Bogota, Lima, Quito, Rio Branco",
-    "(GMT-05:00) Eastern Time (US & Canada)",
-    "(GMT-05:00) Indiana (East)",
-    "(GMT-04:00) Atlantic Time (Canada)",
-    "(GMT-04:00) Caracas, La Paz",
-    "(GMT-04:00) Manaus",
-    "(GMT-04:00) Santiago",
-    "(GMT-03:30) Newfoundland",
-    "(GMT-03:00) Brasilia",
-    "(GMT-03:00) Buenos Aires, Georgetown",
-    "(GMT-03:00) Greenland",
-    "(GMT-03:00) Montevideo",
-    "(GMT-02:00) Mid-Atlantic",
-    "(GMT-01:00) Cape Verde Is.",
-    "(GMT-01:00) Azores",
-    "(GMT+00:00) Casablanca, Monrovia, Reykjavik",
-    "(GMT+00:00) Greenwich Mean Time : Dublin, Edinburgh, Lisbon, London",
-    "(GMT+01:00) Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
-    "(GMT+01:00) Belgrade, Bratislava, Budapest, Ljubljana, Prague",
-    "(GMT+01:00) Brussels, Copenhagen, Madrid, Paris",
-    "(GMT+01:00) Sarajevo, Skopje, Warsaw, Zagreb",
-    "(GMT+01:00) West Central Africa",
-    "(GMT+02:00) Amman",
-    "(GMT+02:00) Athens, Bucharest, Istanbul",
-    "(GMT+02:00) Beirut",
-    "(GMT+02:00) Cairo",
-    "(GMT+02:00) Harare, Pretoria",
-    "(GMT+02:00) Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius",
-    "(GMT+02:00) Jerusalem",
-    "(GMT+02:00) Minsk",
-    "(GMT+02:00) Windhoek",
-    "(GMT+03:00) Kuwait, Riyadh, Baghdad",
-    "(GMT+03:00) Moscow, St. Petersburg, Volgograd",
-    "(GMT+03:00) Nairobi",
-    "(GMT+03:00) Tbilisi",
-    "(GMT+03:30) Tehran",
-    "(GMT+04:00) Abu Dhabi, Muscat",
-    "(GMT+04:00) Baku",
-    "(GMT+04:00) Yerevan",
-    "(GMT+04:30) Kabul",
-    "(GMT+05:00) Yekaterinburg",
-    "(GMT+05:00) Islamabad, Karachi, Tashkent",
-    "(GMT+05:30) Sri Jayawardenapura",
-    "(GMT+05:30) Chennai, Kolkata, Mumbai, New Delhi",
-    "(GMT+05:45) Kathmandu",
-    "(GMT+06:00) Almaty, Novosibirsk",
-    "(GMT+06:00) Astana, Dhaka",
-    "(GMT+06:30) Yangon (Rangoon)",
-    "(GMT+07:00) Bangkok, Hanoi, Jakarta",
-    "(GMT+07:00) Krasnoyarsk",
-    "(GMT+08:00) Beijing, Chongqing, Hong Kong, Urumqi",
-    "(GMT+08:00) Kuala Lumpur, Singapore",
-    "(GMT+08:00) Irkutsk, Ulaan Bataar",
-    "(GMT+08:00) Perth",
-    "(GMT+08:00) Taipei",
-    "(GMT+09:00) Osaka, Sapporo, Tokyo",
-    "(GMT+09:00) Seoul",
-    "(GMT+09:00) Yakutsk",
-    "(GMT+09:30) Adelaide",
-    "(GMT+09:30) Darwin",
-    "(GMT+10:00) Brisbane",
-    "(GMT+10:00) Canberra, Melbourne, Sydney",
-    "(GMT+10:00) Hobart",
-    "(GMT+10:00) Guam, Port Moresby",
-    "(GMT+10:00) Vladivostok",
-    "(GMT+11:00) Magadan, Solomon Is., New Caledonia",
-    "(GMT+12:00) Auckland, Wellington",
-    "(GMT+12:00) Fiji, Kamchatka, Marshall Is.",
-    "(GMT+13:00) Nuku'alofa"
+    "(GMT-07:00) Pacific Daylight Time"
   ];
 
   function init() {
@@ -191,6 +112,10 @@
     var $zipcode_input = $("#zipcode-input");
     var $download_button = $("#download-button");
     var cached_url_settings = {};
+
+    var updateDownloadUrl = function () {
+      $download_button.attr("href", getUrl(cached_url_settings));
+    };
 
     $.getJSON("https://api.smellpittsburgh.org/api/v2/cities", function (data) {
       // Get city names and ids
@@ -206,13 +131,8 @@
       city_ids.push(null);
       city_ids.push(-1);
 
-      var updateDownloadUrl = function () {
-        $download_button.attr("href", getUrl(cached_url_settings));
-      };
-
-      // Set UI
+      // Set region UI
       var init_city_index = 0;
-      var init_timezone_index = 0;
       widgets.setCustomDropdown($("#region-dropdown"), {
         items: city_names,
         init_index: init_city_index,
@@ -235,11 +155,16 @@
           $ui.data("id", city_ids[i]);
         }
       });
+
+      // Set zipcode UI
       $zipcode_input.on("change", function () {
         delete cached_url_settings["city_id"];
         cached_url_settings["zipcodes"] = $zipcode_input.val().replace(/\s/g, "");
         updateDownloadUrl();
       });
+
+      // Set timezone UI
+      var init_timezone_index = 0;
       widgets.setCustomDropdown($("#timezone-dropdown"), {
         items: timezone_txt_array_selected,
         init_index: init_timezone_index,
@@ -252,14 +177,45 @@
         }
       });
 
+      // Set datepicker UI
+      var $from = $("#from-time-input").datepicker({}).on("change", function () {
+        $to.datepicker("option", "minDate", getDate(this));
+        cached_url_settings["start_time"] = $from.datepicker("getDate");
+        updateDownloadUrl();
+      });
+      var $to = $("#to-time-input").datepicker({}).on("change", function () {
+        $from.datepicker("option", "maxDate", getDate(this));
+        cached_url_settings["end_time"] = $to.datepicker("getDate");
+        updateDownloadUrl();
+      });
+      var from_date = new Date(new Date().setDate(new Date().getDate() - 30));
+      var to_date = new Date();
+      $from.datepicker("setDate", from_date);
+      $to.datepicker("setDate", to_date);
+      $to.datepicker("option", "minDate", $from.datepicker("getDate"));
+      $from.datepicker("option", "maxDate", $to.datepicker("getDate"));
+
       // Initialize and show the download button
       cached_url_settings = {
         "city_id": city_ids[init_city_index],
-        "timezone_offset": timezone_offset_array_selected[init_timezone_index]
+        "timezone_offset": timezone_offset_array_selected[init_timezone_index],
+        "start_time": from_date,
+        "end_time": to_date
       };
       updateDownloadUrl();
       $("#download-button-container").show();
     });
+  }
+
+  function getDate(element) {
+    var dateFormat = "mm/dd/yy";
+    var date;
+    try {
+      date = $.datepicker.parseDate(dateFormat, element.value);
+    } catch (error) {
+      date = null;
+    }
+    return date;
   }
 
   function safeGet(v, default_val) {
@@ -275,15 +231,25 @@
     var city_id = settings["city_id"];
     var timezone_offset = settings["timezone_offset"];
     var zipcodes = settings["zipcodes"];
+    var start_time = settings["start_time"];
+    var end_time = settings["end_time"];
+    var timezone_offset_diff = new Date().getTimezoneOffset() / 60 + timezone_offset;
     if (typeof city_id !== "undefined" && city_id !== "") {
       url += "&city_ids=" + city_id;
     }
     if (typeof timezone_offset !== "undefined" && timezone_offset !== "") {
-      console.log(timezone_offset);
       url += "&timezone_offset=" + (-parseInt(timezone_offset) * 60);
     }
     if (typeof zipcodes !== "undefined" && zipcodes !== "") {
       url += "&zipcodes=" + zipcodes;
+    }
+    if (typeof start_time !== "undefined" && start_time !== "") {
+      start_time.setHours(0 - timezone_offset_diff, 0, 0, 0);
+      url += "&start_time=" + parseInt(start_time.getTime() / 1000);
+    }
+    if (typeof end_time !== "undefined" && end_time !== "") {
+      end_time.setHours(23 - timezone_offset_diff, 59, 59, 999);
+      url += "&end_time=" + parseInt(end_time.getTime() / 1000);
     }
     return url;
   }
