@@ -11,6 +11,13 @@
   margin: 5px 0 15px 0;
   font-size: 16px;
   width: 250px;
+  background-color: rgb(77, 173, 172);
+  border-color: rgb(77, 173, 172);
+}
+
+#download-button:hover {
+  background-color: rgb(28, 124, 123);
+  border-color: rgb(28, 124, 123);
 }
 
 #region-dropdown {
@@ -52,8 +59,77 @@
   padding: 0.4em;
 }
 
+.menu-container {
+  background-color: #234c5a;
+}
+
+h3,
+h2,
+.badge-text {
+  color: #234c5a !important;
+}
+
+hr {
+  background: #234c5a;
+}
+
+.logo-font-1 {
+  font-family: "SVG_Trade_Gothic_XBold";
+  font-size: 33px;
+  vertical-align: bottom;
+}
+
+.content p a {
+  color: rgb(0, 128, 125) !important;
+}
+
+.logo-font-2 {
+  font-family: "Ernest&Emily";
+  color: rgb(77, 173, 172);
+  font-weight: normal;
+  vertical-align: top;
+}
+
+.logo a {
+  display: inline-block;
+}
+
+.image-wrap-text-1 {
+  margin: 5px 15px 5px 0;
+  float: left;
+  max-width: 220px;
+}
+
+.image-wrap-text-2 {
+  margin: 5px 15px 5px 0;
+  float: left;
+  max-width: 180px;
+}
+
 @media screen and (min-width: 900px) {
   .flex-item-stretch-demo-video {
     flex: 2.1;
   }
+}
+
+@media screen and (max-width: 500px) {
+  .image-wrap-text-1 {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .image-wrap-text-2 {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@font-face {
+  font-family: "Ernest&Emily";
+  src: url(Ernest&Emily.otf);
+}
+
+@font-face {
+  font-family: "SVG_Trade_Gothic_XBold";
+  src: url(SVG_Trade_Gothic_XBold.otf);
 }
