@@ -73,14 +73,15 @@ hr {
   background: #234c5a;
 }
 
-.logo-font-1 {
-  font-family: "SVG_Trade_Gothic_XBold";
-  font-size: 33px;
-  vertical-align: bottom;
-}
-
 .content p a {
   color: rgb(0, 128, 125) !important;
+}
+
+.logo-font-1 {
+  font-family: "SVG_Trade_Gothic_XBold";
+  vertical-align: bottom;
+  font-size: 33px;
+  line-height: 33px;
 }
 
 .logo-font-2 {
@@ -88,6 +89,8 @@ hr {
   color: rgb(77, 173, 172);
   font-weight: normal;
   vertical-align: top;
+  font-size: 33px;
+  line-height: 33px;
 }
 
 .logo a {

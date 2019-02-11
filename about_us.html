@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>Smell MyCity</title>
+  <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/menu.js"></script>
+  <style>
+    .menu-menu-about-us {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <div class="content">
+      <div class="content-table flex-column">
+        <div class="flex-row">
+          <div class="flex-item flex-column">
+            <h2>About Us</h2>
+            <hr>
+            <p class="text">
+              <img class="image image-wrap-text-1" src="img/create-logo.png">
+              <a href="https://cmucreatelab.org/" target="_blank">The CREATE Lab</a> (Community Robotics, Education and Technology Empowerment Lab) at Carnegie Mellon University, explores socially meaningful innovation and deployment of robotic technologies. CREATE is both a technology innovator and a community partner; this unique combination enables the creation of community-based technologies that help empower citizens to realize their vision for a better quality of life.
+              For more information visit: <a href="https://cmucreatelab.org/" target="_blank">cmucreatelab.org</a>
+            </p>
+            <p class="text">
+              <img class="image image-wrap-text-2" src="img/7gen-logo.png">
+              <a href="https://www.seventhgeneration.com" target="_blank">Seventh Generation</a> is a sustainable home cleaning product company, based in Burlington, Vermont.
+              For the past 30 years, Seventh Generation has been committed to using business as a force for good.
+              The company partners with like-minded organizations, like CREATE Lab, to advocate for the rights of people and the planet because they believe that a company's values are as important as the products it makes.
+              Seventh Generation knows that plant-based products can provide the efficacy you are looking for, and that products designed from renewable plant-based ingredients are a more sustainable option than ingredients made from petroleum.
+              Above all, they believe that we have a responsibility to this generation and the next seven, and invite us all on their journey to nurture the health of the next seven generations.
+              For more information visit: <a href="https://www.seventhgeneration.com" target="_blank">seventhgeneration.com</a>
+            </p>
+            <p class="text">
+              In 2018, Seventh Generation partnered with the <a href="https://www.sierraclub.org/ready-for-100" target="_blank">Sierra Club's Ready for 100 campaign</a> asking cities across the country to commit to 100% renewable energy.
+              This effort is in service of a healthier future for all -- a move to 100% renewable energy will help reduce negative health effects (like asthma) caused by burning fossil fuels.
+              Join the movement for 100% clean energy.
+              Over 100 cities have committed to running on clean energy by 2035 -- is your city #Readyfor100?
+              <a href="https://act.sierraclub.org/actions/National?actionId=AR0032635&id=70131000001LzlBAAS" target="_blank">Ask your city to commit today!</a>
+            </p>
+            <h3>Our Local Partners</h3>
+            <p class="text">
+              Our Louisville pilot is made possible with support from The Envirome Institute at the University of Louisville, and in partnership with:
+            </p>
+            <ul>
+              <li>The West Jefferson County Community Task Force</li>
+              <li>REACT (Rubbertown Emergency ACTion)</li>
+            </ul>
+            <p class="text">
+              In addition, all smell reports originating from Louisville will be sent to the Louisville Metro Air Pollution Control District (APCD).
+              Our Portland pilot is made possible with support from the Canary Fund, and in partnership with:
+            </p>
+            <ul>
+              <li>Portland Clean Air</li>
+              <li>Neighbors for Clean Air</li>
+              <li>Hayden Island Neighborhood Network</li>
+              <li>Oregon Environmental Council</li>
+              <li>Ecotrust</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+  ga('create', 'UA-10682694-20', 'auto');
+  ga('send', 'pageview');
+
+  function setDownloadUrl() {
+    var root_url = "http://api.smellpittsburgh.org/";
+    var api_url = "api/v1/smell_reports?timezone_offset=" + (new Date().getTimezoneOffset()) + "&start_time=1475121600&allegheny_county_only=true&format=csv";
+    $("#download-button").attr("href", root_url + api_url);
+  }
+
+  $(setDownloadUrl)
+</script>
+
+</html>
