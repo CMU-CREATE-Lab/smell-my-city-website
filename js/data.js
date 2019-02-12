@@ -92,6 +92,20 @@
       $to.datepicker("setDate", to_date);
       $to.datepicker("option", "minDate", $from.datepicker("getDate"));
       $from.datepicker("option", "maxDate", $to.datepicker("getDate"));
+      $("#all-time-checkbox").on("change", function () {
+        if (this.checked) {
+          $from.datepicker("option", "disabled", true);
+          $to.datepicker("option", "disabled", true);
+          delete cached_url_settings["start_time"];
+          delete cached_url_settings["end_time"];
+          updateDownloadUrl();
+        } else {
+          $from.datepicker("option", "disabled", false);
+          $to.datepicker("option", "disabled", false);
+          $from.trigger("change");
+          $to.trigger("change");
+        }
+      });
 
       // Initialize and show the download button
       cached_url_settings = {

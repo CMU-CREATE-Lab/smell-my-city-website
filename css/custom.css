@@ -37,6 +37,11 @@
   width: 110px;
 }
 
+#to-time-input:disabled,
+#from-time-input:disabled {
+  opacity: 0.5;
+}
+
 #to-time-txt {
   margin: 0px 5px;
 }
@@ -106,6 +111,10 @@ hr {
   margin: 5px 15px 5px 0;
   float: left;
   max-width: 180px;
+}
+
+#all-time-time-txt {
+  margin-left: 5px;
 }
 
 @media screen and (min-width: 900px) {
