@@ -117,6 +117,10 @@ hr {
   margin-left: 5px;
 }
 
+input::placeholder {
+  color: #a7a7a7;
+}
+
 @media screen and (min-width: 900px) {
   .flex-item-stretch-demo-video {
     flex: 2.1;
