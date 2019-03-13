@@ -25,7 +25,7 @@
         city_ids.push(city["id"]);
       }
       city_names.push("All Locations");
-      city_names.push("Zipcode");
+      city_names.push("ZIP Code");
       city_ids.push(null);
       city_ids.push(-1);
 
