@@ -136,7 +136,7 @@
   }
 
   function getUrl(settings) {
-    var root_url = "http://staging.api.smellpittsburgh.org/";
+    var root_url = "http://api.smellpittsburgh.org/";
     var api_url = "api/v2/smell_reports?format=csv";
     var url = root_url + api_url;
     settings = safeGet(settings, {});
