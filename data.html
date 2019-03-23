@@ -25,6 +25,10 @@
       opacity: 1 !important;
       font-weight: 700 !important;
     }
+    .no-ul-margins {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
   </style>
 </head>
 
@@ -52,7 +56,13 @@
             </p>
             <ul>
               <li>Date and time of smell report</li>
-              <li>Smell rating (a number 1 through 5, with 5 being the most severe)</li>
+              <ul class="no-ul-margins">
+                <li>You can choose to download the data in UTC time or your local time</li>
+                <li>Your local time will be the time stamp on the machine you use to download the data</li>
+                <li>The date/time will be formatted as follows: 06/01/2016 01:47:52 -04:00</li>
+                <li>In the example above, the "-04:00" at the end of the string indicates time zone</li>
+              </ul>
+              <li>Smell value (a number 1 through 5, with 5 being the most severe)</li>
               <li>Location of smell report (ZIP code only)</li>
               <li>Smell description and symptoms linked to odor (if provided)</li>
             </ul>
