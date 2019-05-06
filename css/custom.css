@@ -114,6 +114,12 @@ hr {
   max-width: 180px;
 }
 
+.image-wrap-text-3 {
+  margin: 5px 15px 5px 0;
+  float: left;
+  max-width: 170px;
+}
+
 #all-time-time-txt {
   margin-left: 5px;
 }
@@ -135,6 +141,11 @@ input::placeholder {
   }
 
   .image-wrap-text-2 {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .image-wrap-text-3 {
     max-width: 100%;
     margin-bottom: 10px;
   }
